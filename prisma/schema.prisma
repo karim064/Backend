@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model arsip {
+  id         Int      @id @default(autoincrement())
+  no_surat   String   @db.VarChar(255)
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  judul      String   @db.VarChar(255)
+  fileUrl    String   @db.VarChar(255)
+  kategoriId Int
+  kategori   kategori @relation(fields: [kategoriId], references: [id], map: "Arsip_kategoriId_fkey")
+
+  @@index([kategoriId], map: "Arsip_kategoriId_fkey")
+}
+
+model kategori {
+  id         Int     @id @default(autoincrement())
+  nama       String  @db.VarChar(255)
+  keterangan String  @db.VarChar(255)
+    createdAt     DateTime  @default(now()) @map(name: "created_at")
+  arsip      arsip[]
+}
