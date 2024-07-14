@@ -14,7 +14,7 @@ model arsip {
   judul      String   @db.VarChar(255)
   fileUrl    String   @db.VarChar(255)
   kategoriId Int
-  kategori   kategori @relation(fields: [kategoriId], references: [id], map: "Arsip_kategoriId_fkey")
+  kategori   kategori @relation(fields: [kategoriId], onDelete: Cascade, onUpdate: Cascade, references: [id], map: "Arsip_kategoriId_fkey")
 
   @@index([kategoriId], map: "Arsip_kategoriId_fkey")
 }
